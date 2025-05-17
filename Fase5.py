@@ -11,7 +11,7 @@
 """
 # Importando e Aplicando o álias a cada biblioteca
 import streamlit as st
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -33,11 +33,12 @@ Empresa enfrenta dificuldades para identificar os melhores candidatos para cada 
 inversamente, oferecer as melhores vagas aos profissionais cadastrados.
 
 '''
-st.write("# Objetivos : Recomendar automaticamente os melhores pares vaga ↔ candidato.")
-
+st.write('<b><span style="font-size: 20px;">Objetivos : </b>', unsafe_allow_html=True)
+'''
+Recomendar automaticamente os melhores pares vaga ↔ candidato.
+''' 
 st.write("# Solução Proposta")
 st.write('<b><span style="font-size: 20px;">Desenvolvemos um sistema inteligente que combina:</b>', unsafe_allow_html=True) 
-
 '''
 - Processamento de textos (descrições de currículos e vagas)
 '''
