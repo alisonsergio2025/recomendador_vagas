@@ -14,7 +14,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
+from ler_dados_applicants_zip import carregar_dados_applicants
 # Ignorar avisos específicos emitidos pelo Pandas tipo SettingWithCopyWarning
 import warnings
 from pandas.errors import SettingWithCopyWarning
@@ -53,17 +53,17 @@ st.write('<b><span style="font-size: 20px;">Desenvolvemos um sistema inteligente
 '''
 st.write('<b><span style="font-size: 20px;"></b>', unsafe_allow_html=True) 
 #"""**1**.Acessando a base de dados"""
+# Carregar os dados
+df_applicants = carregar_dados_applicants()
+
+# Visualizar no Streamlit
+st.write("Visualização dos dados dos candidatos:")
+st.dataframe(df_applicants.head())
+#st.write(df_applicants.head(3))
 
 
 
 st.title("Conclusão")
 '''
 
-Se considerarmos todas as métricas, o modelo "SeasWA" parece ter um desempenho geral melhor, pois apresenta os menores valores de MAE, RMSE e MASE, que são métricas críticas para avaliação da previsão.
-
-Se focarmos apenas em WMAPE, o Prophet seria o melhor.
-
-Se analisarmos MAPE e SMAPE, o XGBoost se destaca.
-
-Porém, como o SeasWA tem os melhores resultados em várias métricas importantes, ele parece ser a melhor escolha globalmente
 '''
