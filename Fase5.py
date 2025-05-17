@@ -99,7 +99,7 @@ st.pyplot(fig2)
 st.title("🔥 Score Médio por Cliente e Origem do Ranking (Top 10 Clientes)")
 
 # Carregar dados
-df = pd.read_csv("base_final_ml_com_nome_cliente.csv")
+#df = pd.read_csv("base_final_ml_com_nome_cliente.csv")
 
 # Preencher valores nulos
 df['cliente'] = df['cliente'].fillna("desconhecido")
