@@ -15,6 +15,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import io
 # Importação da função que carrega o zip
 from ler_dados_applicants_zip import carregar_csv_de_zip
 # Cabeçalho do app
@@ -143,11 +144,74 @@ else:
 #-------------------------------------------------------------------------
 # Gráfico 5 - Exibir Matches Reais (Aceitos) com Alto Score 
 st.title("📤 Exibir Matches Reais (Aceitos) com Alto Score")
-df_export = df[(df['match_real'] == 1) & (df['score'] >= 0.8)]
-df_export[['nome', 'titulo_vaga', 'cliente', 'score']].sort_values(by='score', ascending=False).to_csv("melhores_matches_reais.csv", index=False)
-st.write(df_export[['nome', 'titulo_vaga', 'cliente', 'score']].reset_index(drop=True))
 
-#print("Arquivo 'melhores_matches_reais.csv' gerado com sucesso!")
+# --- Multiselect de ranking_origem ---
+ranking_opcoes = df['ranking_origem'].dropna().unique().tolist()
+ranking_selecionados = st.multiselect(
+    "Filtrar por Origem do Ranking",
+    options=ranking_opcoes,
+    default=ranking_opcoes,
+    key="ranking_origem_filter"  # 🔑 ID único para evitar conflito
+)
+
+
+# --- Filtrar por matches reais, score alto e origens selecionadas ---
+df_export = df[
+    (df['match_real'] == 1) &
+    (df['score'] >= 0.8) &
+    (df['ranking_origem'].isin(ranking_selecionados))
+]
+
+# --- Remover duplicatas por nome + vaga + cliente ---
+df_export = df_export.drop_duplicates(subset=['nome', 'titulo_vaga', 'cliente'])
+
+# --- Selecionar colunas para exibição e ordenação ---
+df_resultado = df_export[['nome', 'titulo_vaga', 'cliente', 'score']].sort_values(by='score', ascending=False)
+
+# --- Exibir resultado ---
+st.write(df_resultado.reset_index(drop=True))
+
+# --- Gerar CSV e botão de download ---
+csv = df_resultado.to_csv(index=False).encode('utf-8')
+st.download_button(
+    label="📥 Baixar CSV com Matches Reais",
+    data=csv,
+    file_name='melhores_matches_reais.csv',
+    mime='text/csv'
+)
+
+
+#-------------------------------------------------------------------------
+#st.title("📤 2 ----Exibir Matches Reais (Aceitos) com Alto Score")
+
+# Adicionar filtro de ranking_origem
+#origens_disponiveis = df['ranking_origem'].dropna().unique().tolist()
+#origem_selecionada = st.selectbox("Filtrar por Origem do Ranking", options=origens_disponiveis, index=0)
+# Aplicar filtro
+#df_filtrado = df[
+#    (df['match_real'] == 1) &
+#    (df['score'] >= 0.8) &
+#    (df['ranking_origem'] == origem_selecionada)
+#]
+# Selecionar e ordenar colunas
+#df_result = df_filtrado[['nome', 'titulo_vaga', 'cliente', 'score']].sort_values(by='score', ascending=False).reset_index(drop=True)
+# Mostrar tabela
+#st.dataframe(df_result)
+# Gerar CSV em memória
+#csv_buffer = io.StringIO()
+#df_result.to_csv(csv_buffer, index=False, encoding='utf-8-sig')
+#csv_bytes = csv_buffer.getvalue().encode('utf-8-sig')
+# Botão de download
+#st.download_button(
+#    label="📥 Baixar CSV de Matches Reais com Score ≥ 0.8",
+#    data=csv_bytes,
+#    file_name="melhores_matches_reais.csv",
+#    mime="text/csv"
+#)
+# Mensagem
+#st.success(f"{len(df_result)} registros encontrados para a origem '{origem_selecionada}'.")
+
+
 
 st.title("Conclusão")
 
