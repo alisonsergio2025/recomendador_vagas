@@ -39,11 +39,9 @@ st.markdown("""
 assert os.path.exists("base_final_ml_com_nome_cliente.zip"), "Arquivo base_final_ml_com_nome_cliente.zip não encontrado"
 #df = pd.read_csv("base_final_ml_com_nome_cliente.csv")
 df = carregar_csv_de_zip("base_final_ml_com_nome_cliente.zip", "base_final_ml_com_nome_cliente.csv", ",")
-st.write(df.head(5))
 # Verificações e carregamento
 assert os.path.exists("dados_applicants_limpo.zip"), "Arquivo dados_applicants_limpo.zip não encontrado"
 df_applicants = carregar_csv_de_zip("dados_applicants_limpo.zip", "dados_applicants_limpo.csv",";")
-st.write(df_applicants.head(5))
 # Criar coluna binária para match real
 df_applicants['match_real'] = df_applicants['data_aceite'].notnull().astype(int)
 df = df.merge(df_applicants[['codigo_profissional', 'match_real']], on='codigo_profissional', how='left')
