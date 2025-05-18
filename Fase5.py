@@ -16,12 +16,17 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 import io
+from PIL import Image
 # Importação da função que carrega o zip
 from ler_dados_applicants_zip import carregar_csv_de_zip
 # Cabeçalho do app
 st.write("# Tech Challenge Fase 5")
 st.markdown("**Alison Sérgio de Amarins Germano - RM 357521**") 
 st.write("## Sistema de Recomendação de Vagas e Candidatos")
+
+# Caminho para a imagem (ajuste conforme a estrutura do seu projeto)
+st.image("job_match_humanizado.png", caption='"O prazer no trabalho aperfeiçoa a obra." - Aristóteles')
+
 st.markdown("**Problema:**")
 st.markdown("""
 Empresa enfrenta dificuldades para identificar os melhores candidatos para cada vaga e, 
