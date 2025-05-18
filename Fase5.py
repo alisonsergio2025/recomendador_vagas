@@ -135,6 +135,7 @@ vaga_selecionada = st.selectbox("Selecione uma vaga", sorted(vagas_validas))
 # Filtrar os candidatos da vaga selecionada
 df_vaga_ex = df[df['titulo_vaga'] == vaga_selecionada]
 top5 = df_vaga_ex.sort_values(by='score', ascending=False).head(5)
+
 #
 if top5.empty:
     st.warning("⚠️ Nenhum candidato encontrado para essa vaga.")
