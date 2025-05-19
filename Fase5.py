@@ -23,10 +23,7 @@ from ler_dados_applicants_zip import carregar_csv_de_zip
 st.write("# Tech Challenge Fase 5")
 st.markdown("**Alison Sérgio de Amarins Germano - RM 357521**") 
 st.write("## Sistema de Recomendação de Vagas e Candidatos")
-
-# Caminho para a imagem (ajuste conforme a estrutura do seu projeto)
 st.image("job_match_humanizado.png", caption='"O prazer no trabalho aperfeiçoa a obra." - Aristóteles')
-
 st.markdown("**Problema:**")
 st.markdown("""
 Empresa enfrenta dificuldades para identificar os melhores candidatos para cada vaga e, 
@@ -50,13 +47,9 @@ assert os.path.exists("dados_applicants_limpo.zip"), "Arquivo dados_applicants_l
 df_applicants = carregar_csv_de_zip("dados_applicants_limpo.zip", "dados_applicants_limpo.csv",";")
 #
 assert os.path.exists("df_base.zip"), "Arquivo df_base.zip não encontrado"
-st.write("df_base")
 df_base = carregar_csv_de_zip("df_base.zip", "df_base.csv",";")
-st.write(df_base.head(5))
 #
-st.write("df_vagas")
 df_vagas = carregar_csv_de_zip("df_vagas_limpo.zip", "df_vagas_limpo.csv",";")
-st.write(df_vagas.head(5))
 # Criar coluna binária para match real
 df_applicants['match_real'] = df_applicants['data_aceite'].notnull().astype(int)
 df = df.merge(df_applicants[['codigo_profissional', 'match_real']], on='codigo_profissional', how='left')
@@ -188,12 +181,30 @@ st.download_button(
     mime='text/csv'
 )
 #-------------------------------------------------------------------------
-
-
-
-
 st.title("Conclusão")
+with st.expander("📘 Ver Conclusão do Projeto"):
+    st.markdown("### 🧾 Conclusão do Projeto")
+    st.markdown("""
+    O projeto Fase 5 (Datathon) teve como principal objetivo desenvolver um sistema de recomendação inteligente que conectasse candidatos e vagas com base em critérios técnicos, linguísticos e históricos de aceitação real. Para atingir esse objetivo, adotamos uma abordagem estruturada, dividindo o projeto em duas frentes principais:
+    """)
 
-'''
+    st.markdown("#### 1️⃣ Google Colab – Processamento e Modelagem de Dados")
+    st.markdown("""
+    Nesta etapa, foi realizada toda a **Análise Exploratória de Dados (EDA)**, **limpeza e tratamento de inconsistências**, normalização de estruturas complexas (como listas em colunas), além da aplicação de **técnicas de NLP (Processamento de Linguagem Natural)** para extração de palavras-chave tanto dos currículos quanto das descrições das vagas.  
+    A partir dessas informações, foram construídas bases estruturadas para **cálculo de similaridade textual com TF-IDF**, gerando scores de match entre candidatos e vagas. Também foi feita a engenharia de variáveis e a identificação de casos reais de aceite por meio da variável `data_aceite`, permitindo criar uma **variável alvo (match_real)** para análises supervisionadas futuras.
+    """)
 
-'''
+    st.markdown("#### 2️⃣ Streamlit – Interface Interativa e Storytelling")
+    st.markdown("""
+    Com as bases prontas, migramos para o ambiente **Streamlit** para construir uma interface de **análise visual e tomada de decisão**.  
+    Nesta fase, focamos na criação de gráficos interativos, filtros dinâmicos e consultas específicas, como o *Top 5 candidatos por vaga* ou *Top 5 vagas por candidato*.  
+    Adicionalmente, foram incluídos filtros por cliente, origem do ranking e nível de score, permitindo aos usuários explorarem os dados de forma intuitiva e direcionada.  
+
+    Um painel analítico e humanizado com storytelling orienta a interpretação dos resultados, oferecendo não apenas uma visualização, mas também **insights de valor para recrutamento inteligente**.
+    """)
+
+    st.markdown("""
+    ---
+    Este modelo híbrido entre **Colab (processamento e modelagem)** e **Streamlit (visualização e entrega)** se mostrou eficiente e robusto para o objetivo proposto, permitindo separar claramente o esforço computacional da experiência final de uso.
+    """)
+
