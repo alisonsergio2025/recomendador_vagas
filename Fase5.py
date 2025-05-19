@@ -3,7 +3,7 @@
 # Data Analytics FIAP - 05/2025
 # Alison Sérgio de Amarins Germano - RM 357521
 
-*Ambiente de desenvolvimento utilizado foi o VS CODE
+*Ambiente de desenvolvimento utilizado foi o Colab e VS CODE
 
 **1. Empresa enfrenta dificuldades para identificar os melhores candidatos para cada vaga e, 
 inversamente, oferecer as melhores vagas aos profissionais cadastrados.
@@ -19,9 +19,10 @@ import io
 from PIL import Image
 # Importação da função que carrega o zip
 from ler_dados_applicants_zip import carregar_csv_de_zip
-# Cabeçalho do app
+# Cabeçalho
 st.write("# Tech Challenge Fase 5")
 st.markdown("**Alison Sérgio de Amarins Germano - RM 357521**") 
+st.markdown("**Data Analytics FIAP - 05/2025 - 6DTAT**") 
 st.write("## Sistema de Recomendação de Vagas e Candidatos")
 st.image("job_match_humanizado.png", caption='"O prazer no trabalho aperfeiçoa a obra." - Aristóteles')
 st.markdown("**Problema:**")
@@ -68,7 +69,6 @@ df_vagas = carregar_csv_de_zip("df_vagas_limpo.zip", "df_vagas_limpo.csv",";")
 # Criar coluna binária para match real
 df_applicants['match_real'] = df_applicants['data_aceite'].notnull().astype(int)
 df = df.merge(df_applicants[['codigo_profissional', 'match_real']], on='codigo_profissional', how='left')
-
 
 df['match_real'] = df['match_real'].fillna(0).astype(int)
 df = df.drop_duplicates(subset='codigo_profissional')
