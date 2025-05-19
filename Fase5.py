@@ -222,7 +222,7 @@ st.download_button(
 )
 #-------------------------------------------------------------------------
 st.title("Conclusão")
-with st.expander("📘 Ver"):
+with st.expander("📘 Exibir"):
     st.markdown("### 🧾 Sobre o Projeto")
     st.markdown("""
     O projeto Fase 5 (Datathon) teve como principal objetivo desenvolver um sistema de recomendação inteligente que conectasse candidatos e vagas com base em critérios técnicos, linguísticos e históricos de aceitação real. Para atingir esse objetivo, foi utilizada uma abordagem estruturada, dividindo o projeto em duas frentes principais:
