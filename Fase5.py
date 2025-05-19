@@ -68,7 +68,11 @@ df_vagas = carregar_csv_de_zip("df_vagas_limpo.zip", "df_vagas_limpo.csv",";")
 # Criar coluna binária para match real
 df_applicants['match_real'] = df_applicants['data_aceite'].notnull().astype(int)
 df = df.merge(df_applicants[['codigo_profissional', 'match_real']], on='codigo_profissional', how='left')
+
+
 df['match_real'] = df['match_real'].fillna(0).astype(int)
+df = df.drop_duplicates(subset='codigo_profissional')
+
 # Filtros
 # Calcular top 5 clientes por score médio
 top5_clientes = (
@@ -221,7 +225,7 @@ with st.expander("📘 Ver Conclusão do Projeto"):
 
     Um painel analítico e humanizado com storytelling orienta a interpretação dos resultados, oferecendo não apenas uma visualização, mas também **insights de valor para recrutamento inteligente**.
     """)
-    
+
     st.markdown("### 🔍 Conclusão Técnica do Sistema")
     st.markdown("""
     Este modelo híbrido entre **Colab (processamento e modelagem)** e **Streamlit (visualização e entrega)** se mostrou eficiente e robusto para o objetivo proposto, permitindo separar claramente o esforço computacional da experiência final de uso.  
