@@ -46,7 +46,7 @@ tts = gTTS(text=texto_narracao, lang='pt')
 tts.save(audio_file)
 
 # Painel de Introdução Interativo
-with st.expander("ℹ️ Sobre este sistema de recomendação", expanded=True):
+with st.expander("ℹ️ Visão Geral", expanded=True):
     # Tocar o áudio com um player
     st.audio(audio_file, format="audio/mp3")
 
@@ -74,7 +74,6 @@ with st.expander("ℹ️ Sobre este sistema de recomendação", expanded=True):
     """)
 # Carregar os dados
 assert os.path.exists("base_final_ml_com_nome_cliente.zip"), "Arquivo base_final_ml_com_nome_cliente.zip não encontrado"
-#df = pd.read_csv("base_final_ml_com_nome_cliente.csv")
 df = carregar_csv_de_zip("base_final_ml_com_nome_cliente.zip", "base_final_ml_com_nome_cliente.csv", ",")
 # Verificações e carregamento
 assert os.path.exists("dados_applicants_limpo.zip"), "Arquivo dados_applicants_limpo.zip não encontrado"
@@ -223,8 +222,8 @@ st.download_button(
 )
 #-------------------------------------------------------------------------
 st.title("Conclusão")
-with st.expander("📘 Ver Conclusão do Projeto"):
-    st.markdown("### 🧾 Conclusão do Projeto")
+with st.expander("📘 Ver"):
+    st.markdown("### 🧾 Sobre o Projeto")
     st.markdown("""
     O projeto Fase 5 (Datathon) teve como principal objetivo desenvolver um sistema de recomendação inteligente que conectasse candidatos e vagas com base em critérios técnicos, linguísticos e históricos de aceitação real. Para atingir esse objetivo, foi utilizada uma abordagem estruturada, dividindo o projeto em duas frentes principais:
     """)
@@ -244,7 +243,7 @@ with st.expander("📘 Ver Conclusão do Projeto"):
     Um painel analítico e humanizado com storytelling orienta a interpretação dos resultados, oferecendo não apenas uma visualização, mas também **insights de valor para recrutamento inteligente**.
     """)
 
-    st.markdown("### 🔍 Conclusão Técnica do Sistema")
+    st.markdown("### 🔍 Técnica do Sistema")
     st.markdown("""
     Este modelo híbrido entre **Colab (processamento e modelagem)** e **Streamlit (visualização e entrega)** se mostrou eficiente e robusto para o objetivo proposto, permitindo separar claramente o esforço computacional da experiência final de uso.  
 
