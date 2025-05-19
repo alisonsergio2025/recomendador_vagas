@@ -29,15 +29,30 @@ st.markdown("""
 Empresa enfrenta dificuldades para identificar os melhores candidatos para cada vaga e, 
 inversamente, oferecer as melhores vagas aos profissionais cadastrados.
 """)
-st.markdown("**Objetivos:**")
-st.markdown("Recomendar automaticamente os melhores pares vaga ↔ candidato.")
-st.markdown("## Solução Proposta")
-st.markdown("""
-- Processamento de textos (descrições de currículos e vagas)  
-- Técnicas de similaridade (TF-IDF)  
-- Modelos supervisionados com base em `data_aceite` (match real)  
-- Visualizações analíticas
-""")
+# Painel de Introdução Interativo
+with st.expander("ℹ️ Sobre este sistema de recomendação", expanded=True):
+    st.markdown("""
+    Este sistema tem como objetivo **recomendar automaticamente os melhores pares entre vagas e candidatos**.
+
+    🔍 **Como funciona:**
+    - Utiliza técnicas de **Processamento de Linguagem Natural (NLP)** para extrair palavras-chave de currículos e vagas.
+    - Calcula a similaridade entre candidatos e vagas usando **TF-IDF + Cosine Similarity**.
+    - Usa a coluna `data_aceite` como indicação real de que houve **match verdadeiro**, permitindo análises supervisionadas.
+
+    📊 **Gráficos disponíveis:**
+    - **Distribuição de Aceites:** mostra quantos candidatos aceitaram as vagas.
+    - **Top 5 Clientes e Candidatos:** análise dos melhores com base na média dos scores.
+    - **Heatmap:** comparação entre origens dos rankings e clientes.
+    - **Matches Reais com Alto Score:** candidatos aceitos com alta compatibilidade.
+
+    🔧 **Filtros disponíveis:** selecione origem do ranking ou título da vaga.
+
+    ---
+    ⚙️ Projeto construído em duas etapas:
+    - Pré-processamento e Machine Learning via **Google Colab**.
+    - Visualização e Storytelling com **Streamlit no VS Code**.
+
+    """)
 # Carregar os dados
 assert os.path.exists("base_final_ml_com_nome_cliente.zip"), "Arquivo base_final_ml_com_nome_cliente.zip não encontrado"
 #df = pd.read_csv("base_final_ml_com_nome_cliente.csv")
@@ -71,6 +86,7 @@ df_filtrado = df[df['ranking_origem'].isin(origens_selecionadas)]
 #-------------------------------------------------------------------------
 # Gráfico 1 – Filtrado por Origem do Ranking
 st.subheader("Distribuição de Aceites Reais por Origem")
+st.caption("Este gráfico mostra a quantidade de candidatos que aceitaram ou não as vagas recomendadas.")
 fig1, ax1 = plt.subplots()
 sns.countplot(data=df_filtrado, x='match_real', palette='Set2', ax=ax1)
 ax1.set_title("Distribuição de Aceites Reais")
@@ -80,6 +96,7 @@ st.pyplot(fig1)
 #-------------------------------------------------------------------------
 # Gráfico 2 – Top 5 Score Médio por Cliente
 st.subheader("Top 5 Clientes com Maior Score Médio")
+st.caption("Clientes que receberam candidatos com maior compatibilidade média de perfil.")
 fig2, ax2 = plt.subplots(figsize=(10, 5))
 top5_clientes = (
     df_filtrado.groupby('cliente')['score']
@@ -99,6 +116,7 @@ else:
 #-------------------------------------------------------------------------
 # Gráfico 3 - Score Médio por Cliente e Origem do Ranking (Top 10 Clientes)
 st.title("🔥 Score Médio por Cliente e Origem do Ranking (Top 10 Clientes)")
+st.caption("Mostra como a qualidade (score) das recomendações varia entre os clientes e a origem do ranking (vaga/candidato).")
 # Preencher valores nulos
 df['cliente'] = df['cliente'].fillna("desconhecido")
 df['ranking_origem'] = df['ranking_origem'].fillna("indefinido")
@@ -132,6 +150,7 @@ st.pyplot(fig)
 #-------------------------------------------------------------------------
 # Gráfico 4 - Exemplo Real de Recomendação
 st.title("🧾 Exemplo Real de Recomendação")
+st.caption("Visualização da performance média das recomendações por cliente e origem do ranking.")
 # Agrupar por vaga e contar apenas candidatos com score
 vagas_com_score = df[df['score'].notnull()].groupby('titulo_vaga').size()
 # Selecionar apenas vagas com pelo menos 1 candidato com score
@@ -150,7 +169,7 @@ else:
 #-------------------------------------------------------------------------
 # Gráfico 5 - Exibir Matches Reais (Aceitos) com Alto Score 
 st.title("📤 Exibir Matches Reais (Aceitos) com Alto Score")
-
+st.caption("Exibe combinações bem-sucedidas (match_real = 1) com alta similaridade (score ≥ 0.8).")
 # --- Multiselect de ranking_origem ---
 ranking_opcoes = df['ranking_origem'].dropna().unique().tolist()
 ranking_selecionados = st.multiselect(
@@ -185,7 +204,7 @@ st.title("Conclusão")
 with st.expander("📘 Ver Conclusão do Projeto"):
     st.markdown("### 🧾 Conclusão do Projeto")
     st.markdown("""
-    O projeto Fase 5 (Datathon) teve como principal objetivo desenvolver um sistema de recomendação inteligente que conectasse candidatos e vagas com base em critérios técnicos, linguísticos e históricos de aceitação real. Para atingir esse objetivo, adotamos uma abordagem estruturada, dividindo o projeto em duas frentes principais:
+    O projeto Fase 5 (Datathon) teve como principal objetivo desenvolver um sistema de recomendação inteligente que conectasse candidatos e vagas com base em critérios técnicos, linguísticos e históricos de aceitação real. Para atingir esse objetivo, foi utilizada uma abordagem estruturada, dividindo o projeto em duas frentes principais:
     """)
 
     st.markdown("#### 1️⃣ Google Colab – Processamento e Modelagem de Dados")
@@ -196,9 +215,9 @@ with st.expander("📘 Ver Conclusão do Projeto"):
 
     st.markdown("#### 2️⃣ Streamlit – Interface Interativa e Storytelling")
     st.markdown("""
-    Com as bases prontas, migramos para o ambiente **Streamlit** para construir uma interface de **análise visual e tomada de decisão**.  
-    Nesta fase, focamos na criação de gráficos interativos, filtros dinâmicos e consultas específicas, como o *Top 5 candidatos por vaga* ou *Top 5 vagas por candidato*.  
-    Adicionalmente, foram incluídos filtros por cliente, origem do ranking e nível de score, permitindo aos usuários explorarem os dados de forma intuitiva e direcionada.  
+    Com as bases prontas, foi migrada para o ambiente **Streamlit** para construir uma interface de **análise visual e tomada de decisão**.  
+    Nesta fase, o foco foi na criação de gráficos interativos, filtros dinâmicos e consultas específicas, como o *Top 5 candidatos por vaga* ou *Top 5 vagas por candidato*.  
+    Foram incluídos ainda filtros por origem do ranking, permitindo aos usuários explorarem os dados de forma intuitiva e direcionada.  
 
     Um painel analítico e humanizado com storytelling orienta a interpretação dos resultados, oferecendo não apenas uma visualização, mas também **insights de valor para recrutamento inteligente**.
     """)
@@ -206,5 +225,6 @@ with st.expander("📘 Ver Conclusão do Projeto"):
     st.markdown("""
     ---
     Este modelo híbrido entre **Colab (processamento e modelagem)** e **Streamlit (visualização e entrega)** se mostrou eficiente e robusto para o objetivo proposto, permitindo separar claramente o esforço computacional da experiência final de uso.
+    No entanto, como toda solução baseada em dados, o modelo ainda demanda validações adicionais e ciclos contínuos de aprimoramento, especialmente para aumentar a assertividade nas recomendações e proporcionar uma experiência cada vez mais fluida e estratégica ao processo de recrutamento.
     """)
 
