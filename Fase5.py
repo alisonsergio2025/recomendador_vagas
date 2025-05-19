@@ -17,8 +17,14 @@ import seaborn as sns
 import os
 import io
 from PIL import Image
+from gtts import gTTS
 # Importação da função que carrega o zip
 from ler_dados_applicants_zip import carregar_csv_de_zip
+# Texto que será narrado
+texto_narracao = """
+Bem-vindo ao sistema de recomendação de vagas. Esta solução ajuda empresas a encontrar os candidatos ideais 
+analisando perfis, palavras-chave e históricos de aceites. 
+Os dados foram preparados no Colab e a experiência criada com Streamlit."""
 # Cabeçalho
 st.write("# Tech Challenge Fase 5")
 st.markdown("**Alison Sérgio de Amarins Germano - RM 357521**") 
@@ -30,8 +36,20 @@ st.markdown("""
 Empresa enfrenta dificuldades para identificar os melhores candidatos para cada vaga e, 
 inversamente, oferecer as melhores vagas aos profissionais cadastrados.
 """)
+
+# Gerar e salvar áudio MP3
+audio_file = "narracao_apresentacao.mp3"
+if os.path.exists(audio_file):
+    os.remove(audio_file)
+
+tts = gTTS(text=texto_narracao, lang='pt')
+tts.save(audio_file)
+
 # Painel de Introdução Interativo
 with st.expander("ℹ️ Sobre este sistema de recomendação", expanded=True):
+    # Tocar o áudio com um player
+    st.audio(audio_file, format="audio/mp3")
+
     st.markdown("""
     Este sistema tem como objetivo **recomendar automaticamente os melhores pares entre vagas e candidatos**.
 
