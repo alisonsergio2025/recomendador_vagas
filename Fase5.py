@@ -221,10 +221,16 @@ with st.expander("📘 Ver Conclusão do Projeto"):
 
     Um painel analítico e humanizado com storytelling orienta a interpretação dos resultados, oferecendo não apenas uma visualização, mas também **insights de valor para recrutamento inteligente**.
     """)
-
+    
+    st.markdown("### 🔍 Conclusão Técnica do Sistema")
     st.markdown("""
-    ---
-    Este modelo híbrido entre **Colab (processamento e modelagem)** e **Streamlit (visualização e entrega)** se mostrou eficiente e robusto para o objetivo proposto, permitindo separar claramente o esforço computacional da experiência final de uso.
-    No entanto, como toda solução baseada em dados, o modelo ainda demanda validações adicionais e ciclos contínuos de aprimoramento, especialmente para aumentar a assertividade nas recomendações e proporcionar uma experiência cada vez mais fluida e estratégica ao processo de recrutamento.
+    Este modelo híbrido entre **Colab (processamento e modelagem)** e **Streamlit (visualização e entrega)** se mostrou eficiente e robusto para o objetivo proposto, permitindo separar claramente o esforço computacional da experiência final de uso.  
+
+    💡 **Observação:** Por se tratar de um **protótipo funcional**, foi utilizada uma **base de dados reduzida**, com o objetivo de otimizar desempenho e facilitar testes durante o desenvolvimento iterativo.  
+
+    ⚙️ Entretanto, como toda solução baseada em dados, o modelo ainda **demanda validações adicionais** e **ciclos contínuos de aprimoramento**, especialmente para:  
+    - Aumentar a **assertividade nas recomendações**  
+    - Proporcionar uma **experiência mais fluida e estratégica** ao processo de recrutamento.
     """)
+
 
